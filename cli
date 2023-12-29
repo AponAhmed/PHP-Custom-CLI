@@ -1,0 +1,31 @@
+#!/usr/bin/env php
+<?php
+
+// Example command-line argument handling
+$command = isset($argv[1]) ? $argv[1] : null;
+
+// Load commands
+$commands = [
+    'make' => ['model', 'controller'],
+];
+
+// Parse command and arguments
+list($mainCommand, $subCommand) = explode(':', $command) + [null, null];
+
+// Execute the appropriate command
+if (isset($commands[$mainCommand]) && in_array($subCommand, $commands[$mainCommand])) {
+    $className = ucfirst($mainCommand);
+    require_once __DIR__ . "/Commands/{$className}.php";
+    $commandInstance = new $className($argv);
+    $commandInstance->run($subCommand);
+} else {
+    // Display help or usage information
+    echo "Usage: cli [command]\n";
+    echo "Available commands:\n";
+    foreach ($commands as $mainCmd => $subCmds) {
+        echo "  $mainCmd\n";
+        foreach ($subCmds as $subCmd) {
+            echo "    $mainCmd:$subCmd\n";
+        }
+    }
+}
