@@ -9,7 +9,7 @@ php cli <command>
 
 Replace `<command>` with one of the available commands listed below.
 
-## Available Commands
+## Available example Commands
 
 - **make**
   - `model`: Create a new model.
